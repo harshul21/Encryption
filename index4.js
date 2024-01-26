@@ -12,9 +12,9 @@ let key = '12345678123456781234567812345678';
 // encrypted += cipher.final('hex');
 //console.log('encrypted: ' + encrypted)
 
-varHexKey = '24f64656f9e32bcf50759ebbfc2cd674'
+varHexMesssage = '24f64656f9e32bcf50759ebbfc2cd674'
 let decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-let decrypted = decipher.update(varHexKey, 'hex', 'utf-8'); //converting hex to utf-8
+let decrypted = decipher.update(varHexMesssage, 'hex', 'utf-8'); //converting hex to utf-8
 decrypted += decipher.final('utf-8');
 
 console.log('decrypted: ' + decrypted)
