@@ -1,11 +1,19 @@
 {
-  "name": "algoencryption",
+  "name": "hi",
   "version": "1.0.0",
-  "description": "",
+  "description": "dfdf",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshul21/Encryption.git"
+  },
+  "bugs": {
+    "url": "https://github.com/harshul21/Encryption/issues"
+  },
+  "homepage": "https://github.com/harshul21/Encryption#readme"
 }
