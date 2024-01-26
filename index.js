@@ -1,27 +1,24 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const CryptoJS = require('crypto-js');
+const crypto = require('crypto');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+function decryptAES128CBC(encryptedText, key, iv) {
+  const decipher = crypto.createDecipheriv('aes-128-cbc', Buffer.from(key, 'hex'), Buffer.from(iv, 'hex'));
+  console.log(decipher);
+  decipher.setAutoPadding(false);
+  let decrypted = decipher.update(encryptedText, 'hex', 'utf-8');
+  console.log(decrypted);
+  decrypted += decipher.final('utf-8');
+  return decrypted;
+}
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// Example usage:
+const encryptedFilePath = 'bg16V5qCkfbkQ4nGZmWhurld0Tj8BArwyTRhafgiNkM=';
+const encryptionKey = '0db19bb5d246964ea386c1c85e981264';
+const initializationVector = Buffer.alloc(16).fill(0);
 
-// AES decryption route
-app.post('/decrypt', (req, res) => {
-    const { encryptedText, key, iv } = req.body;
-    const ivParam = iv ? { iv: CryptoJS.enc.Base64.parse(iv) } : {};
+try {
 
-    try {
-        const decryptedText = CryptoJS.AES.decrypt(encryptedText, key, { mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7, ...ivParam }).toString(CryptoJS.enc.Utf8);
-        res.send({ decryptedText });
-    } catch (error) {
-        console.error('Decryption error:', error.message);
-        res.status(500).send({ error: 'Decryption failed. Invalid key, IV, or encrypted text.' });
-    }
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+  const decryptedMessage = decryptAES128CBC(encryptedFilePath, encryptionKey, initializationVector);
+  console.log('Decrypted Message:', decryptedMessage);
+} catch (error) {
+  console.error('Error:', error.message);
+}
